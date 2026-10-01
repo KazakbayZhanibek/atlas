@@ -55,6 +55,5 @@ export default function StarField(props) {
   return <>
     <Layer {...props} count={mobile ? 1000 : 1900} radius={65} opacity={.47} pointSize={1} seed={42} />
     <Layer {...props} count={mobile ? 140 : 350} radius={28} opacity={.28} pointSize={.8} seed={93} />
-    <Layer {...props} count={mobile ? 24 : 70} radius={12} opacity={.12} pointSize={.7} seed={12} />
   </>;
 }

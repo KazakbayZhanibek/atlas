@@ -10,3 +10,19 @@
 @media(max-width:767px){.film-nav{padding:18px 20px}.film-nav p{display:none}.sound-toggle{margin-left:auto;font-size:9px}.film-state{max-width:none;left:22px;right:22px}.film-state h1,.film-state h2{font-size:clamp(48px,12.8vw,76px);line-height:.98;letter-spacing:-.035em;margin-bottom:22px}.state-1{top:auto;bottom:17%}.state-2{top:20%;text-align:right}.state-3{top:auto;bottom:22%}.state-4{top:auto;bottom:24%}.scene-copy p{font-size:11px;max-width:235px}.film-hud{left:22px;right:22px;bottom:5vh;font-size:8px}.hud-telemetry,.hud-progress>span{display:none}.progress-track{width:48px}.hud-label{font-size:7px}.custom-cursor{display:none}.scene-fallback{top:16%;left:22px}}
 @media(max-height:560px) and (min-width:768px){.film-state h1,.film-state h2{font-size:64px}.state-1{top:25%}.film-nav{padding-top:15px}.film-hud{bottom:20px}}
 @media(prefers-reduced-motion:reduce){.film{height:100svh}.custom-cursor{display:none}.film-hud .hud-progress{display:none}.line-inner{will-change:auto}}
+.state-1 h1{line-height:.9;letter-spacing:-.038em}
+.state-1 .serif{font-size:1.075em;letter-spacing:-.035em;padding-right:.08em}
+.surface-target{position:absolute;top:0;left:0;opacity:0;pointer-events:none;transition:opacity .3s;color:#d5c8af}
+.surface-target i{position:absolute;left:-5px;top:-5px;width:10px;height:10px;border:1px solid #d5c8af99;border-radius:50%}
+.surface-target i:before,.surface-target i:after{content:'';position:absolute;background:#d5c8af99}
+.surface-target i:before{width:1px;height:18px;left:3.5px;top:-5px}
+.surface-target i:after{height:1px;width:18px;top:3.5px;left:-5px}
+.surface-target span{display:block;position:absolute;left:15px;top:12px;white-space:pre;font-size:8px;font-variant-numeric:tabular-nums;line-height:1.7;letter-spacing:.09em;transition:opacity .4s}
+.progress-track em{position:absolute;top:0;width:14px;height:1px;background:#e2c080;animation:sequence-cue 3.4s ease-in-out infinite}
+.film-overlay[data-started=true] .progress-track em{display:none}
+@keyframes sequence-cue{0%,15%{transform:translateX(0);opacity:0}35%{opacity:.6}85%,100%{transform:translateX(74px);opacity:0}}
+@media(min-width:1600px){.state-1{top:29%;left:4.8vw}.state-1 h1{font-size:clamp(128px,8vw,150px)}}
+@media(min-width:768px) and (max-width:1450px){.state-1{left:4.7vw;top:29%}.state-1 h1{font-size:7.7vw}}
+@media(max-width:767px){.surface-target{display:none}.state-1 h1{line-height:.96}.progress-track em{width:8px;animation-name:sequence-cue-mobile}}
+@keyframes sequence-cue-mobile{0%,15%{transform:translateX(0);opacity:0}35%{opacity:.6}85%,100%{transform:translateX(40px);opacity:0}}
+@media(prefers-reduced-motion:reduce){.progress-track em{animation:none}}

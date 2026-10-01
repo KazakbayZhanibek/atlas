@@ -4,7 +4,25 @@ import CameraRig from '../experience/CameraRig';
 import Planet from '../experience/Planet';
 import StarField from '../experience/StarField';
 import PostProcessing from '../experience/PostProcessing';
+import SpaceDust from '../experience/SpaceDust';
 function Ready({ onReady }) { useEffect(() => { onReady(); }, [onReady]); return null; }
+function DragControls({ sequence, reduced }) {
+  const canvas = useThree(s => s.gl.domElement);
+  useEffect(() => {
+    if (reduced) return;
+    let start = null;
+    const down = event => {
+      if (event.pointerType !== 'mouse' || event.button !== 0) return;
+      start = { x:event.clientX, angle:sequence.current.dragTarget || 0 };
+      canvas.setPointerCapture(event.pointerId);
+    };
+    const move = event => { if (start) sequence.current.dragTarget = Math.max(-.052, Math.min(.052, start.angle+(event.clientX-start.x)*.0006)); };
+    const up = () => { start = null; };
+    canvas.addEventListener('pointerdown', down);canvas.addEventListener('pointermove', move);canvas.addEventListener('pointerup', up);canvas.addEventListener('pointercancel', up);
+    return () => {canvas.removeEventListener('pointerdown', down);canvas.removeEventListener('pointermove', move);canvas.removeEventListener('pointerup', up);canvas.removeEventListener('pointercancel', up);};
+  }, [canvas, sequence, reduced]);
+  return null;
+}
 function Visibility() {
   const set = useThree(s => s.set);
   useEffect(() => {
@@ -19,10 +37,12 @@ export default function HeroCanvas({ sequence, reduced, onReady, onFailure }) {
   useEffect(() => { if (lost) onFailure(); }, [lost, onFailure]);
   return <Canvas className="hero-canvas" dpr={[1,1.5]} camera={{ position:[0,.3,11.7], fov:42, near:.05, far:150 }} gl={{ antialias:false, alpha:false, powerPreference:'high-performance' }} onCreated={({ gl }) => { gl.setClearColor('#050505'); gl.domElement.addEventListener('webglcontextlost', () => setLost(true), {once:true}); }}>
     <Visibility />
+    <DragControls sequence={sequence} reduced={reduced} />
     <Suspense fallback={null}>
       <CameraRig sequence={sequence} reduced={reduced} />
       <Planet sequence={sequence} reduced={reduced} />
       <StarField sequence={sequence} reduced={reduced} />
+      <SpaceDust sequence={sequence} reduced={reduced} />
       <PostProcessing reduced={reduced} />
       <Ready onReady={onReady} />
     </Suspense>
